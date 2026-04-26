@@ -7,7 +7,7 @@ let DURATIONS = {
 };
 
 let targetSessions = parseInt(localStorage.getItem('sessions-target')) || 4;
-let completedSessions = 0;
+let completedSessions = parseInt(localStorage.getItem('sessions-completed')) || 0;
 
 let timeRemaining = DURATIONS.work;
 let isRunning = false;
@@ -69,6 +69,7 @@ function tick() {
   if (timeRemaining < 0) {
     if (currentMode === 'work') {
       completedSessions++;
+      localStorage.setItem('sessions-completed', completedSessions);
     }
     switchMode();
   }
@@ -103,6 +104,7 @@ function reset() {
   }
   pauseTimer();
   completedSessions = 0;
+  localStorage.setItem('sessions-completed', completedSessions);
   currentMode = 'work';
   document.body.classList.remove('is-break');
   timeRemaining = DURATIONS.work;

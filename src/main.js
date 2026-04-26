@@ -1,6 +1,6 @@
 let DURATIONS = {
-  work:  25 * 60,
-  break: 5 * 60,
+  work:  (parseInt(localStorage.getItem('duration-work'))  || 25) * 60,
+  break: (parseInt(localStorage.getItem('duration-break')) || 5)  * 60,
 };
 
 let timeRemaining = DURATIONS.work;
@@ -78,11 +78,16 @@ function reset() {
 }
 
 function applySettings() {
-  const newWork  = Math.max(1, parseInt(workDurationInput.value)) * 60;
-  const newBreak = Math.max(1, parseInt(breakDurationInput.value)) * 60;
-  DURATIONS.work  = newWork;
-  DURATIONS.break = newBreak;
+  const newWork  = Math.max(1, parseInt(workDurationInput.value));
+  const newBreak = Math.max(1, parseInt(breakDurationInput.value));
+  DURATIONS.work  = newWork  * 60;
+  DURATIONS.break = newBreak * 60;
+  localStorage.setItem('duration-work',  newWork);
+  localStorage.setItem('duration-break', newBreak);
 }
+
+workDurationInput.value  = DURATIONS.work  / 60;
+breakDurationInput.value = DURATIONS.break / 60;
 
 startPauseBtn.addEventListener('click', startPause);
 resetBtn.addEventListener('click', reset);

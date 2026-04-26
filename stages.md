@@ -90,16 +90,16 @@ Before you commit and merge, take 10–15 minutes to refine how the timer feels.
 You’ll have more room for visual exploration and personality in Stage 3, where it’s one of the extension options.
 
 
-
-
-
-# Final checks
+## Final checks
 
 - Test that Apply works: change the work minutes to 1, hit Apply, then hit Reset — the timer should jump to 01:00.
 
-# Stage 3
 
-### Replace spinner buttons with custom + and − buttons
+
+# Stage 3
+Here are some extensions I want to add to my pomodoro timer
+
+### UI change: Replace spinner buttons with custom + and − buttons
 The native number input arrows are hard to style consistently across browsers. Replace them with your own buttons built in HTML.
 
 - Hide the native spinner arrows with CSS (`-webkit-appearance: none`)
@@ -107,3 +107,27 @@ The native number input arrows are hard to style consistently across browsers. R
 - Wire them up in `main.js` — each button should read the current input value, increment or decrement it, and write the new value back
 - Apply a minimum of 1 so the value can’t go below 1
 - Style the buttons using your existing `.btn` styles or a new variant that fits the compact settings layout
+
+
+### UI change 2: Change Start and Reset buttons to icons
+Replace Start and Reset with:
+- Stop: Left
+- Pause: In the middle
+- Restart: Right
+
+
+### Local storage
+
+Save the user’s settings (work/break durations) and optionally session history to localStorage, so they’re still there when the user comes back. You used localStorage in the Score Keeper last week—same idea here. Think about:
+
+What data should persist? (Settings, session count, maybe the current timer state?)
+When do you save? (After settings change, after a session completes?)
+When do you load? (On page load, before initializing the timer.)
+
+
+### Session tracking
+Keep count of how many pomodoros (work sessions) you’ve completed and display the count. You could show it as a simple number, a row of dots, or even small tomato icons. Think about:
+
+What state do you need? (A counter, probably.)
+When does it increment? (When a work session ends, before switching to break.)
+Where does it display in the UI?

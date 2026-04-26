@@ -1,4 +1,4 @@
-const DURATIONS = {
+let DURATIONS = {
   work:  25 * 60,
   break: 5 * 60,
 };
@@ -13,6 +13,9 @@ const timeDisplayEl = document.getElementById('time-display');
 const modeIndicatorEl = document.getElementById('mode-indicator');
 const startPauseBtn = document.getElementById('start-pause-btn');
 const resetBtn      = document.getElementById('reset-btn');
+const workDurationInput  = document.getElementById('work-duration-input');
+const breakDurationInput = document.getElementById('break-duration-input');
+const applySettingsBtn   = document.getElementById('apply-settings-btn');
 
 function formatTime(seconds) {
   const m = Math.floor(seconds / 60).toString().padStart(2, '0');
@@ -27,9 +30,24 @@ function updateDOM() {
   startPauseBtn.textContent = isRunning ? 'Pause' : 'Start';
 }
 
+function playChime() {
+  const ctx = new AudioContext();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.frequency.value = 880;
+  gain.gain.setValueAtTime(0.4, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + 1);
+}
+
 function switchMode() {
+  playChime();
   currentMode = currentMode === 'work' ? 'break' : 'work';
   timeRemaining = DURATIONS[currentMode];
+  document.body.classList.toggle('is-break', currentMode === 'break');
 }
 
 function tick() {
@@ -59,7 +77,15 @@ function reset() {
   updateDOM();
 }
 
+function applySettings() {
+  const newWork  = Math.max(1, parseInt(workDurationInput.value)) * 60;
+  const newBreak = Math.max(1, parseInt(breakDurationInput.value)) * 60;
+  DURATIONS.work  = newWork;
+  DURATIONS.break = newBreak;
+}
+
 startPauseBtn.addEventListener('click', startPause);
 resetBtn.addEventListener('click', reset);
+applySettingsBtn.addEventListener('click', applySettings);
 
 updateDOM();

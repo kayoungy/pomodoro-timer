@@ -1,19 +1,24 @@
 :root {
   /* Colors — base */
-  --color-bg:             #1a0e0a;
-  --color-surface:        #2c1810;
-  --color-surface-raised: #3d2318;
-  --color-border:         #5c3526;
-  --color-text:           #f5e6d8;
-  --color-text-muted:     #a8836e;
+  --color-bg:                  #0e0e0e;
+  --color-surface:             #1a1a1a;
+  --color-btn-primary:         #f0f0f0;
+  --color-btn-primary-hover:   #ffffff;
+  --color-btn-secondary:       #242424;
+  --color-btn-secondary-hover: #2e2e2e;
+  --color-border:              #333333;
+  --color-text:                #f0f0f0;
+  --color-text-muted:          #888888;
 
   /* Colors — work mode */
-  --color-work-primary: #c45c3a;
-  --color-work-glow:    rgba(196, 92, 58, 0.25);
+  --color-work-primary:       #c45c3a;
+  --color-work-primary-hover: #d4693f;
+  --color-work-glow:          rgba(196, 92, 58, 0.25);
 
   /* Colors — break mode */
-  --color-break-primary: #7a9e7e;
-  --color-break-glow:    rgba(122, 158, 126, 0.25);
+  --color-break-primary:       #7a9e7e;
+  --color-break-primary-hover: #8ab48e;
+  --color-break-glow:          rgba(122, 158, 126, 0.25);
 
   /* Spacing scale */
   --space-xs:  4px;
@@ -55,18 +60,22 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 1s ease, color 1s ease;
 }
 
 .timer-container {
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  transition: background-color 1s ease, border-color 1s ease;
+  border-radius: var(--radius-full);
   padding: var(--space-xl);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-lg);
-  min-width: 320px;
+  width: 420px;
+  height: 420px;
+  justify-content: center;
 }
 
 .mode-indicator {
@@ -98,18 +107,83 @@ body {
   border: none;
   border-radius: var(--radius-full);
   cursor: pointer;
+  transition: background-color 1s ease, color 1s ease, border-color 1s ease;
 }
 
 .btn-primary {
-  background-color: var(--color-work-primary);
-  color: #fff;
+  background-color: var(--color-btn-primary);
+  color: var(--color-bg);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-btn-primary-hover);
 }
 
 .btn-secondary {
-  background-color: var(--color-surface-raised);
-  color: var(--color-text-muted);
+  background-color: var(--color-btn-secondary);
+  color: var(--color-text);
   border: 1px solid var(--color-border);
 }
+
+.btn-secondary:hover {
+  background-color: var(--color-btn-secondary-hover);
+}
+
+.settings-panel {
+  padding: var(--space-lg);
+  justify-content: center;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.settings-field label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.settings-field input {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+  background-color: var(--color-btn-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  width: 80px;
+}
+
+.settings-field input::-webkit-inner-spin-button,
+.settings-field input::-webkit-outer-spin-button {
+  opacity: 1;
+  background-color: var(--color-btn-secondary);
+  border-left: 1px solid var(--color-border);
+  cursor: pointer;
+}
+
+body.is-break {
+  --color-bg:                  #f0f0f0;
+  --color-surface:             #e2e2e2;
+  --color-btn-primary:         #0e0e0e;
+  --color-btn-primary-hover:   #1a1a1a;
+  --color-btn-secondary:       #d0d0d0;
+  --color-btn-secondary-hover: #c0c0c0;
+  --color-border:              #cccccc;
+  --color-text:                #0e0e0e;
+  --color-text-muted:          #666666;
+}
+
 
 #app[data-mode="work"] .time-display {
   color: var(--color-work-primary);
